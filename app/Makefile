@@ -4,6 +4,7 @@ CFLAGS=-Wall -Wextra -Werror -pedantic
 NAME=ft_ping
 
 INCLUDES= \
+			includes/ft_ping.h
 
 SRCS= \
 			srcs/main.c
@@ -12,6 +13,9 @@ OBJS= $(SRCS:%.c=%.o)
 
 %.o: %.c Makefile $(INCLUDES)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 all: $(NAME)
 
