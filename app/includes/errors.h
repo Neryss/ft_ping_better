@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/11 17:10:19 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 21:38:06 by ckurt            ###   ########.fr       */
+/*   Created: 2026/04/11 20:45:47 by ckurt             #+#    #+#             */
+/*   Updated: 2026/04/11 21:28:43 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef ERRORS_H
+# define ERRORS_H
 
-# include <ctype.h>
-# include <stdio.h>
-# include <stdbool.h>
-# include <stdint.h>
 # include <stdlib.h>
-# include <string.h>
-# include "flags.h"
-# include "errors.h"
-# include "parser_utils.h"
+# include <stdio.h>
+# include <stdarg.h>
 
-int		parse_args(int argc, char **argv, t_flags *flags);
-char    *get_identifier(char *arg);
-int     check_identifier(char *id, char *value, t_flags *flags);
+# define ERROR_PRINT "ft_ping: %s\nTry \'ft_ping -?\' for more information.\n"
 
+void    error_exit(int code, const char *msg, ...);
 
 #endif

@@ -7,12 +7,16 @@ NAME=ft_ping
 INCLUDES= \
 			includes/ft_ping.h \
 			includes/parser.h \
+			includes/parser_utils.h \
 			includes/flags.h \
+			includes/errors.h \
 
 SRCS= \
 			srcs/main.c \
 			srcs/parser.c \
-			srcs/flags.c
+			srcs/parser_utils.c \
+			srcs/flags.c \
+			srcs/errors.c \
 
 OBJS= $(SRCS:%.c=%.o)
 
