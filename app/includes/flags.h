@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   flags.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/10 16:13:02 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 17:17:42 by ckurt            ###   ########.fr       */
+/*   Created: 2026/04/11 18:19:50 by ckurt             #+#    #+#             */
+/*   Updated: 2026/04/11 18:22:21 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_ping.h"
+#ifndef FLAGS_H
+#define FLAGS_H
 
-int	main(int argc, char **argv)
+# include <stdint.h>
+
+typedef struct s_flags
 {
-	t_flags	flags;
+	// --ttl
+	uint8_t	ttl;
+	// -c
+	int		count;
+	// -i
+	float	interval;
+	// -w
+	int		deadline;
+	// -s
+	int		packet_size;
+}			t_flags;
 
-	init_flags(&flags);
+void	init_flags(t_flags *flags);
 
-	parse_args(argc, argv, &flags);
-
-	return (0);
-}
+#endif

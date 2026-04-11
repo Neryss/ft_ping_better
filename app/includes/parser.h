@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 17:10:19 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 17:17:43 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/11 18:22:25 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,18 @@
 # define PARSER_H
 
 # include <ctype.h>
-# include <stdint.h>
+# include <stdio.h>
 # include <stdbool.h>
+# include <stdint.h>
+# include <stdlib.h>
+# include <string.h>
+# include "flags.h"
 
-typedef struct s_flags
-{
-	// --ttl
-	uint8_t	ttl;
-	// -c
-	int		count;
-	// -i
-	float	interval;
-	// -w
-	int		deadline;
-	// -s
-	int		packet_size;
-}			t_flags;
+bool	is_numeric(char *s);
+bool    is_float(char *s);
+int		parse_args(int argc, char **argv, t_flags *flags);
+char    *get_identifier(char *arg);
+int     check_identifier(char id, char *value, t_flags *flags);
 
-bool	isNumeric(char *s);
 
 #endif

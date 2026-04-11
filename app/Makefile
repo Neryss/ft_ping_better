@@ -1,21 +1,26 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -pedantic
+INCLUDE_PATH=-I./includes
 
 NAME=ft_ping
 
 INCLUDES= \
-			includes/ft_ping.h
+			includes/ft_ping.h \
+			includes/parser.h \
+			includes/flags.h \
 
 SRCS= \
-			srcs/main.c
+			srcs/main.c \
+			srcs/parser.c \
+			srcs/flags.c
 
 OBJS= $(SRCS:%.c=%.o)
 
 %.o: %.c Makefile $(INCLUDES)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE_PATH) -o $(NAME)
 
 all: $(NAME)
 
