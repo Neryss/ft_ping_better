@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/11 17:10:19 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 17:17:43 by ckurt            ###   ########.fr       */
+/*   Created: 2026/04/11 17:02:16 by ckurt             #+#    #+#             */
+/*   Updated: 2026/04/11 17:11:23 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../includes/parser.h"
 
-# include <ctype.h>
-# include <stdint.h>
-# include <stdbool.h>
-
-typedef struct s_flags
+bool	is_numeric(char *s)
 {
-	// --ttl
-	uint8_t	ttl;
-	// -c
-	int		count;
-	// -i
-	float	interval;
-	// -w
-	int		deadline;
-	// -s
-	int		packet_size;
-}			t_flags;
-
-bool	isNumeric(char *s);
-
-#endif
+	while (*s)
+		if (!isdigit(*s))
+			return (1);
+	return (0);
+}
