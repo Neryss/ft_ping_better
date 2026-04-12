@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 17:02:16 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 22:00:54 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/12 18:31:21 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	store_uint8_flag(char *value, uint8_t *var)
 
 int	check_identifier(char *id, char *value, t_flags *flags)
 {
+	if (!id)
+		error_exit(3, "invalid option -- %s", id);
 	if (*id == 'c')
 		store_int_flag(value, &flags->count);
 	else if (*id == 'w')
@@ -97,20 +99,6 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 	return (0);
 }
 
-static void is_non_arg_flag(char *id)
-{
-	if (*id == '?')
-	{
-		printf("%s", PING_HELP);
-		exit(0);
-	}
-	else if (*id == 'v')
-	{
-		printf("%s", PING_VERSION);
-		exit(0);
-	}
-}
-
 int	parse_args(int argc, char **argv, t_flags *flags)
 {
 	int		i;
@@ -123,20 +111,19 @@ int	parse_args(int argc, char **argv, t_flags *flags)
 	else
 	{
 		i = 0;
-		while (i < argc)
+		while (++i < argc)
 		{
 			if (argv[i][0] == '-')
 			{
 				identifier = get_identifier(argv[i]);
 				if (!identifier)
-					error_exit(3, "invalid option -- %s", identifier);
+					error_exit(2, "no arguments provided");
 				is_non_arg_flag(identifier);
 				if (i != argc - 1)
 					check_identifier(identifier, argv[i + 1], flags);
 				else
 					error_exit(2, "no argument provided");
 			}
-			i++;
 		}
 	}
 	return (0);

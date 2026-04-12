@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 21:11:36 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 21:38:41 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/12 16:56:02 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,15 @@ bool	is_float(char *s)
 		s++;
 	}
 	return (0);
+}
+
+void is_non_arg_flag(char *id)
+{
+	if (*id == '?')
+		error_exit(0, "%s", PING_HELP);
+	else if (*id == 'v')
+		error_exit(0, "%s", PING_VERSION);
+	else if (*id == 'i' || *id == 's' || *id == 'c' || *id == 'w' || !strcmp(id, "ttl"))
+		return;
+	error_exit(3, "argument doesn\'t exist");
 }

@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 21:10:12 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 21:42:08 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/12 16:58:41 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdbool.h>
 # include <ctype.h>
 # include <stdio.h>
+# include <string.h>
+# include "errors.h"
 
 # define PING_VERSION "ft_ping 1.0\nMade by ckurt\n"
 # define PING_HELP "Usage: ft_ping [OPTION...] HOST ...\n"\
@@ -32,5 +34,6 @@
 
 bool	is_numeric(char *s);
 bool    is_float(char *s);
+void 	is_non_arg_flag(char *id);
 
 #endif

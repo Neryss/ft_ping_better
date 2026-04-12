@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -pedantic
+CFLAGS=-Wall -Wextra -Werror -pedantic -g3
 INCLUDE_PATH=-I./includes
 
 NAME=ft_ping
