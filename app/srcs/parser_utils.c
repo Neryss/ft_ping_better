@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "parser_utils.h"
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+#include "errors.h"
 
 bool	is_numeric(char *s)
 {
@@ -60,4 +64,31 @@ void	is_non_arg_flag(char *id)
 		|| *id == 'w' || !strcmp(id, "ttl"))
 		return ;
 	error_exit(3, "argument doesn\'t exist");
+}
+
+char	*get_identifier(char *arg)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '-')
+		{
+			count++;
+			i++;
+		}
+		else
+		{
+			if (count > 2)
+			{
+				printf("Error, more than 2 dashes\n");
+				return (NULL);
+			}
+			return (&arg[i]);
+		}
+	}
+	return (NULL);
 }

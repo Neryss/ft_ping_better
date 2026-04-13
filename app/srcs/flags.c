@@ -24,6 +24,8 @@ void	init_flags(t_flags *flags)
 
 void	print_flags(t_flags *flags)
 {
-	printf("Flags: [count]=%d [deadline]=%d [interval]=%f [ttl]=%d [packet_size]=%d\n",
-		flags->count, flags->deadline, flags->interval, flags->ttl, flags->packet_size);
+	printf("Flags: [count]=%d [deadline]=%d\
+		[interval]=%f [ttl]=%d [packet_size]=%d\n",
+		flags->count, flags->deadline, flags->interval,
+		flags->ttl, flags->packet_size);
 }

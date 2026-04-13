@@ -16,12 +16,10 @@
 # define MAX_PAYLOAD_SIZE 65399
 
 # include <netinet/ip_icmp.h>
-# include <netinet/ip_icmp.h>
 # include <unistd.h>
 # include "ft_ping.h"
 
-
-typedef struct	s_packet
+typedef struct s_packet
 {
 	struct icmphdr	header;
 	char			payload[MAX_PAYLOAD_SIZE];
@@ -29,6 +27,6 @@ typedef struct	s_packet
 
 t_packet		create_packet(int packet_size);
 void			send_packet(t_ping *ping);
-unsigned short	checksum	(void *b, int len);
+unsigned short	checksum(void *b, int len);
 
 #endif

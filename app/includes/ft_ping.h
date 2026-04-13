@@ -13,15 +13,12 @@
 #ifndef FT_PING_H
 # define FT_PING_H
 
-# include "parser.h"
 # include "flags.h"
-# include <ctype.h>
-# include <stdio.h>
-# include <string.h>
 
 typedef struct s_ping
 {
 	t_flags	flags;
+	char	*target;
 }				t_ping;
 
 #endif

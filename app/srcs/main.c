@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #include "ft_ping.h"
-#include "flags.h"
+#include "parser.h"
 
 int	main(int argc, char **argv)
 {
-	t_flags	flags;
+	t_ping	ping;
 
-	init_flags(&flags);
-	parse_args(argc, argv, &flags);
-	print_flags(&flags);
+	init_flags(&ping.flags);
+	parse_args(argc, argv, &ping);
+	print_flags(&ping.flags);
 	return (0);
 }

@@ -12,33 +12,10 @@
 
 #include "parser.h"
 #include "flags.h"
-
-char	*get_identifier(char *arg)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '-')
-		{
-			count++;
-			i++;
-		}
-		else
-		{
-			if (count > 2)
-			{
-				printf("Error, more than 2 dashes\n");
-				return (NULL);
-			}
-			return (&arg[i]);
-		}
-	}
-	return (NULL);
-}
+#include <stdlib.h>
+#include <string.h>
+#include "errors.h"
+#include "parser_utils.h"
 
 int	store_int_flag(char *value, int *var)
 {
@@ -115,7 +92,7 @@ void	handle_dashes(int argc, char **argv, int i, t_flags *flags)
 		error_exit(2, "no argument provided");
 }
 
-void	parse_args(int argc, char **argv, t_flags *flags)
+void	parse_args(int argc, char **argv, t_ping *ping)
 {
 	int		i;
 
@@ -128,11 +105,14 @@ void	parse_args(int argc, char **argv, t_flags *flags)
 		{
 			if (argv[i][0] == '-')
 			{
-				handle_dashes(argc, argv, i, flags);
+				handle_dashes(argc, argv, i, &ping->flags);
 				i++;
 			}
 			else
-				printf("target is: %s\n", argv[i]);
+			{
+				ping->target = argv[i];
+				printf("target is: %s\n", ping->target);
+			}
 		}
 	}
 }

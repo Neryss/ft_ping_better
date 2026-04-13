@@ -14,10 +14,6 @@
 # define PARSER_UTILS_H
 
 # include <stdbool.h>
-# include <ctype.h>
-# include <stdio.h>
-# include <string.h>
-# include "errors.h"
 
 # define PING_VERSION "ft_ping 1.0\nMade by ckurt\n"
 # define PING_HELP "Usage: ft_ping [OPTION...] HOST ...\n"\
@@ -35,5 +31,6 @@
 bool	is_numeric(char *s);
 bool    is_float(char *s);
 void 	is_non_arg_flag(char *id);
+char	*get_identifier(char *arg);
 
 #endif
