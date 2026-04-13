@@ -14,11 +14,13 @@
 # define FT_PING_H
 
 # include "flags.h"
+#include <netdb.h>
 
 typedef struct s_ping
 {
-	t_flags	flags;
-	char	*target;
+	t_flags			flags;
+	char			*target;
+	struct addrinfo	*dest;
 }				t_ping;
 
 #endif

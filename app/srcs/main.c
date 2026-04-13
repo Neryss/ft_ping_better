@@ -12,6 +12,7 @@
 
 #include "ft_ping.h"
 #include "parser.h"
+#include "network.h"
 
 int	main(int argc, char **argv)
 {
@@ -20,5 +21,7 @@ int	main(int argc, char **argv)
 	init_flags(&ping.flags);
 	parse_args(argc, argv, &ping);
 	print_flags(&ping.flags);
+	dns_lookup(&ping);
+	reverse_dns_lookup(&ping);
 	return (0);
 }

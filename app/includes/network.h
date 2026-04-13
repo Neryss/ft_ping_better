@@ -12,7 +12,9 @@
 
 #ifndef NETWORK_H
 # define NETWORK_H
+# include "ft_ping.h"
 
-char	*dns_lookup(char *input);
+void	dns_lookup(t_ping *ping);
+void	reverse_dns_lookup(t_ping *ping);
 
 #endif

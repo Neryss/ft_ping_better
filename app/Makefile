@@ -11,6 +11,7 @@ INCLUDES= \
 			includes/flags.h \
 			includes/errors.h \
 			includes/packets.h \
+			includes/network.h \
 
 SRCS= \
 			srcs/main.c \
@@ -19,6 +20,7 @@ SRCS= \
 			srcs/flags.c \
 			srcs/errors.c \
 			srcs/packets.c \
+			srcs/network.c \
 
 OBJS= $(SRCS:%.c=%.o)
 
