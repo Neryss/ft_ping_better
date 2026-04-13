@@ -14,7 +14,7 @@
 # define FT_PING_H
 
 # include "flags.h"
-#include <netdb.h>
+# include <netdb.h>
 
 typedef struct s_ping
 {

@@ -21,8 +21,8 @@
 
 void	dns_lookup(t_ping *ping)
 {
-	struct addrinfo hints;
-	struct addrinfo *result;
+	struct addrinfo	hints;
+	struct addrinfo	*result;
 
 	bzero(&hints, sizeof(hints));
 	hints.ai_family = AF_INET;
@@ -31,7 +31,8 @@ void	dns_lookup(t_ping *ping)
 	if (getaddrinfo(ping->target, NULL, &hints, &result) != 0)
 		error_exit(9, "%s", "getaddrinfo failed");
 	ping->dest = (struct addrinfo *)result;
-	inet_ntop(AF_INET, &(((struct sockaddr_in *)ping->dest->ai_addr)->sin_addr), ping->target, INET_ADDRSTRLEN);
+	inet_ntop(AF_INET, &(((struct sockaddr_in *)ping->dest->ai_addr)->sin_addr),
+		ping->target, INET_ADDRSTRLEN);
 	printf("dns target: %s\n", ping->target);
 }
 
@@ -45,10 +46,9 @@ void	reverse_dns_lookup(t_ping *ping)
 	tmp_addr.sin_family = AF_INET;
 	tmp_addr.sin_addr.s_addr = inet_addr(ping->target);
 	len = sizeof(struct sockaddr_in);
-
 	if (getnameinfo((struct sockaddr *)&tmp_addr, len,
 			buff, sizeof(buff), NULL, 0,
-			 NI_NAMEREQD))
+			NI_NAMEREQD))
 		error_exit(10, "could not resolve reverse dns of %s", ping->target);
 	ret = (char *)malloc(sizeof(char) * (strlen(buff) + 1));
 	strcpy(ret, buff);
