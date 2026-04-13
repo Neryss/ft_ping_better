@@ -10,6 +10,7 @@ INCLUDES= \
 			includes/parser_utils.h \
 			includes/flags.h \
 			includes/errors.h \
+			includes/packets.h \
 
 SRCS= \
 			srcs/main.c \
