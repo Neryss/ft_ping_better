@@ -19,6 +19,6 @@
 
 # define ERROR_PRINT "ft_ping: %s\nTry \'ft_ping -?\' for more information.\n"
 
-void    error_exit(int code, const char *msg, ...);
+void	error_exit(int code, const char *msg, ...);
 
 #endif

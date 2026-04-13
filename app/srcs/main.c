@@ -17,8 +17,6 @@ int	main(int argc, char **argv)
 	t_flags	flags;
 
 	init_flags(&flags);
-
 	parse_args(argc, argv, &flags);
-
 	return (0);
 }

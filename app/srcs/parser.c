@@ -99,19 +99,18 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 	return (0);
 }
 
-int	parse_args(int argc, char **argv, t_flags *flags)
+void	parse_args(int argc, char **argv, t_flags *flags)
 {
 	int		i;
 	char	*identifier;
 
-	i = 0;
+	i = -1;
 	identifier = NULL;
 	if (argc < 2)
-		return (1);
+		error_exit(2, "no arguments provided");
 	else
 	{
-		i = 0;
-		while (++i < argc)
+		while (i++ < argc - 1)
 		{
 			if (argv[i][0] == '-')
 			{
@@ -126,5 +125,4 @@ int	parse_args(int argc, char **argv, t_flags *flags)
 			}
 		}
 	}
-	return (0);
 }

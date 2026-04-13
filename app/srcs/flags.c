@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/flags.h"
+#include "flags.h"
 
 void	init_flags(t_flags *flags)
 {

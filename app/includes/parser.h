@@ -23,7 +23,7 @@
 # include "errors.h"
 # include "parser_utils.h"
 
-int		parse_args(int argc, char **argv, t_flags *flags);
+void	parse_args(int argc, char **argv, t_flags *flags);
 char    *get_identifier(char *arg);
 int     check_identifier(char *id, char *value, t_flags *flags);
 
