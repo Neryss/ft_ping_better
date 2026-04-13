@@ -18,6 +18,7 @@ SRCS= \
 			srcs/parser_utils.c \
 			srcs/flags.c \
 			srcs/errors.c \
+			srcs/packets.c \
 
 OBJS= $(SRCS:%.c=%.o)
 

@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:19:50 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 18:22:21 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/13 16:19:08 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ typedef struct s_flags
 }			t_flags;
 
 void	init_flags(t_flags *flags);
+void	print_flags(t_flags *flags);
 
 #endif

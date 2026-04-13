@@ -6,11 +6,12 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 17:02:16 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/12 18:31:21 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/13 16:21:17 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "flags.h"
 
 char	*get_identifier(char *arg)
 {
@@ -99,13 +100,26 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 	return (0);
 }
 
+void	handle_dashes(int argc, char **argv, int i, t_flags *flags)
+{
+	char	*identifier;
+
+	identifier = NULL;
+	identifier = get_identifier(argv[i]);
+	if (!identifier)
+		error_exit(2, "no arguments provided");
+	is_non_arg_flag(identifier);
+	if (i != argc - 1)
+		check_identifier(identifier, argv[i + 1], flags);
+	else
+		error_exit(2, "no argument provided");
+}
+
 void	parse_args(int argc, char **argv, t_flags *flags)
 {
 	int		i;
-	char	*identifier;
 
 	i = -1;
-	identifier = NULL;
 	if (argc < 2)
 		error_exit(2, "no arguments provided");
 	else
@@ -114,15 +128,11 @@ void	parse_args(int argc, char **argv, t_flags *flags)
 		{
 			if (argv[i][0] == '-')
 			{
-				identifier = get_identifier(argv[i]);
-				if (!identifier)
-					error_exit(2, "no arguments provided");
-				is_non_arg_flag(identifier);
-				if (i != argc - 1)
-					check_identifier(identifier, argv[i + 1], flags);
-				else
-					error_exit(2, "no argument provided");
+				handle_dashes(argc, argv, i, flags);
+				i++;
 			}
+			else
+				printf("target is: %s\n", argv[i]);
 		}
 	}
 }

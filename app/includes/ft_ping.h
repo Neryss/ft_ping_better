@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 16:37:43 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/11 17:06:54 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/13 16:15:47 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <stdio.h>
 # include <string.h>
 
-// typedef struct	s_ping
-// {
-
-// }	t_ping;
+typedef struct s_ping
+{
+	t_flags	flags;
+}				t_ping;
 
 #endif
