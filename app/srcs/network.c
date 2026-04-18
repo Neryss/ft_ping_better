@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 16:00:29 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/13 16:08:47 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/18 21:01:55 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ void	dns_lookup(t_ping *ping)
 	hints.ai_socktype = SOCK_RAW;
 	hints.ai_protocol = IPPROTO_ICMP;
 	if (getaddrinfo(ping->target, NULL, &hints, &result) != 0)
-		error_exit(9, "%s", "getaddrinfo failed");
+		error_exit(9, "unknown host");
 	ping->dest = (struct addrinfo *)result;
-	inet_ntop(AF_INET, &(((struct sockaddr_in *)ping->dest->ai_addr)->sin_addr),
-		ping->target, INET_ADDRSTRLEN);
+	if (!inet_ntop(AF_INET,
+			&(((struct sockaddr_in *)ping->dest->ai_addr)->sin_addr),
+			ping->target, INET_ADDRSTRLEN))
+		perror("Couldn't retreive from inet_ntop!");
 	printf("dns target: %s\n", ping->target);
 }
 
@@ -40,20 +42,16 @@ void	reverse_dns_lookup(t_ping *ping)
 {
 	struct sockaddr_in	tmp_addr;
 	socklen_t			len;
-	char				buff[NI_MAXHOST];
-	char				*ret;
+	int					ret;
 
 	tmp_addr.sin_family = AF_INET;
 	tmp_addr.sin_addr.s_addr = inet_addr(ping->target);
 	len = sizeof(struct sockaddr_in);
-	if (getnameinfo((struct sockaddr *)&tmp_addr, len,
-			buff, sizeof(buff), NULL, 0,
-			NI_NAMEREQD))
-		error_exit(10, "could not resolve reverse dns of %s", ping->target);
-	ret = (char *)malloc(sizeof(char) * (strlen(buff) + 1));
-	strcpy(ret, buff);
-	if (!ret)
-		error_exit(99, "Malloc failed during reverse dns");
-	printf("reverse dns: %s", ret);
-	free(ret);
+	ret = getnameinfo((struct sockaddr *)&tmp_addr, len,
+			ping->dns, sizeof(ping->dns), NULL, 0,
+			NI_NAMEREQD);
+	if (ret)
+		error_exit(10, "could not resolve reverse dns of %s: %s",
+			ping->target, gai_strerror(ret));
+	printf("reverse dns: %s", ping->dns);
 }

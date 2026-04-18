@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   packets.h                                          :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/13 02:22:31 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/13 16:23:15 by ckurt            ###   ########.fr       */
+/*   Created: 2026/04/18 20:59:52 by ckurt             #+#    #+#             */
+/*   Updated: 2026/04/18 20:59:54 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PACKETS_H
-# define PACKETS_H
+#include "signals.h"
+#include "ft_ping.h"
+#include <signal.h>
 
-# define MAX_PAYLOAD_SIZE 65399
-
-# include <netinet/ip_icmp.h>
-# include <unistd.h>
-# include "ft_ping.h"
-
-typedef struct s_packet
+void	alarm_handler(int sig)
 {
-	struct icmphdr	header;
-	char			payload[MAX_PAYLOAD_SIZE];
-}				t_packet;
+	(void)sig;
+	g_ping.send = true;
+}
 
-t_packet		create_packet(int packet_size, int *seq);
-void			send_packet(t_ping *ping);
-unsigned short	checksum(void *b, int len);
+void	int_handler(int sig)
+{
+	(void)sig;
+	g_ping.running = false;
+}
 
-#endif
+void	setup_signals(void)
+{
+	signal(SIGALRM, alarm_handler);
+	signal(SIGINT, int_handler);
+}

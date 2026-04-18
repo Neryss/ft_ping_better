@@ -12,6 +12,7 @@ INCLUDES= \
 			includes/errors.h \
 			includes/packets.h \
 			includes/network.h \
+			includes/signals.h \
 
 SRCS= \
 			srcs/main.c \
@@ -22,6 +23,7 @@ SRCS= \
 			srcs/packets.c \
 			srcs/network.c \
 			srcs/ft_ping.c \
+			srcs/signals.c \
 
 OBJS= $(SRCS:%.c=%.o)
 
