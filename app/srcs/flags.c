@@ -20,6 +20,7 @@ void	init_flags(t_flags *flags)
 	flags->interval = 1.0f;
 	flags->ttl = 64;
 	flags->packet_size = 56;
+	flags->timeout = 4;
 }
 
 void	print_flags(t_flags *flags)

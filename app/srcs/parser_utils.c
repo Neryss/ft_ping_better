@@ -61,7 +61,8 @@ void	is_non_arg_flag(char *id)
 	else if (*id == 'v')
 		error_exit(0, "%s", PING_VERSION);
 	else if (*id == 'i' || *id == 's' || *id == 'c'
-		|| *id == 'w' || !strcmp(id, "ttl"))
+		|| *id == 'w' || *id == 'W'
+		|| !strcmp(id, "ttl"))
 		return ;
 	error_exit(3, "argument doesn\'t exist");
 }

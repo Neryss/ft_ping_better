@@ -60,6 +60,8 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 		store_int_flag(value, &flags->deadline);
 	else if (*id == 's')
 		store_int_flag(value, &flags->packet_size);
+	else if (*id == 'W')
+		store_int_flag(value, &flags->timeout);
 	else if (*id == 'i')
 	{
 		if (!is_float(value))

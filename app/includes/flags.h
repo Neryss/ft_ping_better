@@ -27,6 +27,8 @@ typedef struct s_flags
 	int		deadline;
 	// -s
 	int		packet_size;
+	// -W
+	int		timeout;
 }			t_flags;
 
 void	init_flags(t_flags *flags);

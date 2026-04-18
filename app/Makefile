@@ -21,6 +21,7 @@ SRCS= \
 			srcs/errors.c \
 			srcs/packets.c \
 			srcs/network.c \
+			srcs/ft_ping.c \
 
 OBJS= $(SRCS:%.c=%.o)
 
