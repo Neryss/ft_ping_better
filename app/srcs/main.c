@@ -17,11 +17,13 @@
 #include "signals.h"
 #include <unistd.h>
 #include <strings.h>
+#include <time.h>
 
 t_ping	g_ping;
 
 int	main(int argc, char **argv)
 {
+	clock_gettime(CLOCK_MONOTONIC_RAW, &g_ping.start);
 	if (getuid())
 		error_exit(1, "you need sudo for raw sockets creation\n");
 	setup_signals();
