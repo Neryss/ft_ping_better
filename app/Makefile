@@ -11,6 +11,7 @@ INCLUDES= \
 			includes/flags.h \
 			includes/errors.h \
 			includes/packets.h \
+			includes/packets_utils.h \
 			includes/network.h \
 			includes/signals.h \
 
@@ -21,6 +22,7 @@ SRCS= \
 			srcs/flags.c \
 			srcs/errors.c \
 			srcs/packets.c \
+			srcs/packets_utils.c \
 			srcs/network.c \
 			srcs/ft_ping.c \
 			srcs/signals.c \

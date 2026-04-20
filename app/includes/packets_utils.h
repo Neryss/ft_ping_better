@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   packets.h                                          :+:      :+:    :+:   */
+/*   packets_utils.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/13 02:22:31 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/13 16:23:15 by ckurt            ###   ########.fr       */
+/*   Created: 2026/04/20 13:37:05 by ckurt             #+#    #+#             */
+/*   Updated: 2026/04/20 13:46:47 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PACKETS_H
-# define PACKETS_H
+#ifndef PACKETS_UTILS_H
+# define PACKETS_UTILS_H
 
-# define MAX_PAYLOAD_SIZE 65399
-
-# include <netinet/ip_icmp.h>
-# include <unistd.h>
-# include "ft_ping.h"
-
-typedef struct s_packet
-{
-	struct icmphdr	header;
-	char			payload[MAX_PAYLOAD_SIZE];
-}				t_packet;
-
-t_packet		create_packet(int packet_size, int *seq);
-void			send_packet(t_ping *ping);
-void			rcv_packet(t_ping *ping);
-unsigned short	checksum(void *b, int len);
+void	dump_response(void *data);
 
 #endif

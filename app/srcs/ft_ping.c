@@ -32,7 +32,6 @@ void	set_raw_sockotp(t_ping *ping)
 
 	tv_out.tv_sec = ping->flags.timeout;
 	tv_out.tv_usec = 0;
-	// clock_gettime(CLOCK_MONOTONIC, )
 	if (setsockopt(ping->socket, SOL_IP,
 			IP_TTL, &ping->flags.ttl,
 			sizeof(ping->flags.ttl)))
@@ -59,6 +58,7 @@ void	ping_loop(t_ping *ping)
 		if (ping->send)
 		{
 			send_packet(ping);
+			rcv_packet(ping);
 			alarm(ping->sleep_time);
 		}
 	}

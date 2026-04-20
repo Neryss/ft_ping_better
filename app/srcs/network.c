@@ -34,7 +34,10 @@ void	dns_lookup(t_ping *ping)
 	if (!inet_ntop(AF_INET,
 			&(((struct sockaddr_in *)ping->dest->ai_addr)->sin_addr),
 			ping->target, INET_ADDRSTRLEN))
+	{
 		perror("Couldn't retreive from inet_ntop!");
+		exit(1);
+	}
 	printf("dns target: %s\n", ping->target);
 }
 
@@ -50,8 +53,9 @@ void	reverse_dns_lookup(t_ping *ping)
 	ret = getnameinfo((struct sockaddr *)&tmp_addr, len,
 			ping->dns, sizeof(ping->dns), NULL, 0,
 			NI_NAMEREQD);
-	if (ret)
-		error_exit(10, "could not resolve reverse dns of %s: %s",
-			ping->target, gai_strerror(ret));
+	(void)ret;
+	// if (ret)
+	// 	error_exit(10, "could not resolve reverse dns of %s: %s",
+	// 		ping->target, gai_strerror(ret));
 	printf("reverse dns: %s", ping->dns);
 }

@@ -6,14 +6,17 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:31:40 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/18 21:01:02 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/20 13:47:28 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "packets.h"
 #include "ft_ping.h"
+#include "packets_utils.h"
+#include <netinet/ip_icmp.h>
 #include <strings.h>
 #include <stdio.h>
+#include <sys/socket.h>
 
 unsigned short	checksum(void *b, int len)
 {
@@ -64,6 +67,30 @@ void	send_packet(t_ping *ping)
 			sizeof(struct icmphdr) + ping->flags.packet_size, 0,
 			ping->dest->ai_addr, sizeof(struct sockaddr)) == -1)
 		perror("could not send packet!");
-	g_ping.send = false;
-	alarm(ping->sleep_time);
+	ping->send = false;
+}
+
+void	rcv_packet(t_ping *ping)
+{
+	// TODO: check size
+	char				buffer[MAX_PAYLOAD_SIZE];
+	int					ret;
+	uint8_t				headers_size;
+	struct ip			*ip_hdr;
+
+	ret = recv(ping->socket, &buffer, sizeof(buffer), 0);
+	if (ret >= 0)
+	{
+		dump_response(&buffer);
+		ip_hdr = (struct ip *)buffer;
+		headers_size = (ip_hdr->ip_hl * 4) + 8;
+		printf("bytes without header: %d\n", ret - headers_size);
+		printf("received %d bytes from %s\n",
+			ret - (ip_hdr->ip_hl * 4), ping->target);
+	}
+	else
+	{
+		printf("received packet failed\n");
+		perror("fk");
+	}
 }
