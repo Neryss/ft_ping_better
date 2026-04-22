@@ -15,6 +15,7 @@
 #include <errors.h>
 #include <asm-generic/socket.h>
 #include <sys/socket.h>
+#include <time.h>
 
 void	init_socket(t_ping *ping)
 {
@@ -50,6 +51,9 @@ void	set_raw_sockotp(t_ping *ping)
 
 void	ping_loop(t_ping *ping)
 {
+	long double	rtt;
+	double		elapsed;
+
 	set_raw_sockotp(ping);
 	ping->running = true;
 	ping->send = true;
@@ -60,6 +64,10 @@ void	ping_loop(t_ping *ping)
 			send_packet(ping);
 			rcv_packet(ping);
 			alarm(ping->sleep_time);
+			elapsed = ((double)(ping->end.tv_nsec
+						- ping->start.tv_nsec)) / 1000000.0;
+			rtt = (ping->end.tv_sec - ping->start.tv_sec) * 1000.0 + elapsed;
+			printf("Time taken: %Lf\n", rtt);
 		}
 	}
 }

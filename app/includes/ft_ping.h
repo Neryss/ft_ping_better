@@ -27,9 +27,10 @@ typedef struct s_ping
 	char			*target;
 	char			dns[NI_MAXHOST];
 	struct addrinfo	*dest;
-	struct timeval	program_start;
+	struct timespec	program_start;
+	struct timespec	program_end;
 	struct timespec	start;
-	struct timeval	end;
+	struct timespec	end;
 	int				sleep_time;
 	int				seq;
 }				t_ping;

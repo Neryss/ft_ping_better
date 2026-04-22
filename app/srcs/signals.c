@@ -24,13 +24,17 @@ void	alarm_handler(int sig)
 
 void	int_handler(int sig)
 {
-	struct timespec	end;
+	double		elapsed;
+	long double	total_time;
+
 	(void)sig;
 	g_ping.running = false;
-	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-	// uint64_t delta_us = (end.tv_sec - g_ping.start.tv_sec) * 1000000 + (end.tv_nsec - g_ping.start.tv_nsec) / 1000;
-	uint64_t	delta_us = (end.tv_sec - g_ping.start.tv_sec);
-	printf("Program stopped after %ld\n", delta_us);
+	clock_gettime(CLOCK_MONOTONIC, &g_ping.program_end);
+	elapsed = ((double)(g_ping.program_end.tv_nsec
+				- g_ping.program_start.tv_nsec)) / 1000000.0;
+	total_time = (g_ping.program_end.tv_sec - g_ping.program_start.tv_sec)
+		* 1000.0 + elapsed;
+	printf("Program stopped after %.0Lf ms\n", total_time);
 }
 
 void	setup_signals(void)

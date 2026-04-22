@@ -13,10 +13,12 @@
 #include "packets.h"
 #include "ft_ping.h"
 #include "packets_utils.h"
+#include <bits/time.h>
 #include <netinet/ip_icmp.h>
 #include <strings.h>
 #include <stdio.h>
 #include <sys/socket.h>
+#include <time.h>
 
 unsigned short	checksum(void *b, int len)
 {
@@ -67,6 +69,7 @@ void	send_packet(t_ping *ping)
 			sizeof(struct icmphdr) + ping->flags.packet_size, 0,
 			ping->dest->ai_addr, sizeof(struct sockaddr)) == -1)
 		perror("could not send packet!");
+	clock_gettime(CLOCK_MONOTONIC, &ping->start);
 	ping->send = false;
 }
 
@@ -81,6 +84,7 @@ void	rcv_packet(t_ping *ping)
 	ret = recv(ping->socket, &buffer, sizeof(buffer), 0);
 	if (ret >= 0)
 	{
+		clock_gettime(CLOCK_MONOTONIC, &ping->end);
 		dump_response(&buffer);
 		ip_hdr = (struct ip *)buffer;
 		headers_size = (ip_hdr->ip_hl * 4) + 8;
