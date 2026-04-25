@@ -18,12 +18,18 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
+typedef struct s_packets_stats
+{
+	uint32_t	sent;
+	uint32_t	rcv;
+}				t_packet_stats;
+
 typedef struct s_ping
 {
 	bool			running;
-	bool			send;
 	int				socket;
 	t_flags			flags;
+	char			argv_target[NI_MAXHOST];
 	char			*target;
 	char			dns[NI_MAXHOST];
 	struct addrinfo	*dest;
@@ -33,6 +39,7 @@ typedef struct s_ping
 	struct timespec	end;
 	int				sleep_time;
 	int				seq;
+	t_packet_stats	packets_stats;	
 }				t_ping;
 
 extern t_ping	g_ping;

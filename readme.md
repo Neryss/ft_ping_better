@@ -8,6 +8,10 @@ This project uses a docker container as a VM, you need to have both docker and d
 
 You can just run `./start.sh` or `sudo ./start.sh` since it uses docker to create a container where you can run `make` then `ft_ping <ip>`.
 
+### Build inetutils2-0 version of ping
+
+The Dockerfile should install everything needed, inside the vm, you can head inside the inetutils2-0 directory and launch `./configure`, then you can `make`, which will create the binary inside the "ping" directory.
+
 ## How it works
 
 The programs aims to replicate the `ping` utility command, here's how it works:

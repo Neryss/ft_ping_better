@@ -32,5 +32,6 @@ bool	is_numeric(char *s);
 bool	is_float(char *s);
 void	is_non_arg_flag(char *id);
 char	*get_identifier(char *arg);
+char	*near_error(char * value);
 
 #endif

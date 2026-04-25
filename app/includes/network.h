@@ -16,5 +16,6 @@
 
 void	dns_lookup(t_ping *ping);
 void	reverse_dns_lookup(t_ping *ping);
+void	print_rcv_ping(t_ping *ping, int bytes, char *buffer);
 
 #endif

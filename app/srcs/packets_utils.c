@@ -32,4 +32,5 @@ void	dump_response(void *data)
 	printf("Code: %u\n", icmp_header->code);
 	printf("checksum: %u\n", icmp_header->checksum);
 	printf("payload: %s\n", payload);
+	printf("ttl: %d\n", icmp_header->un.echo.sequence);
 }

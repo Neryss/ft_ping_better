@@ -39,14 +39,14 @@ int	store_uint8_flag(char *value, uint8_t *var)
 		tmp = atoi(value);
 		if (tmp > 255 || tmp < 0)
 		{
-			printf("error impossible value\n");
+			error_exit(1, "option value too big: %d\n", tmp);
 			return (1);
 		}
 		*var = tmp;
 		printf("Found value and stored it in flags: %d\n", *var);
 		return (0);
 	}
-	printf("Error: wrong format\n");
+	error_exit(1, "invalid value (\'%s\' near \'%s\')", value, near_error(value));
 	return (1);
 }
 
@@ -79,42 +79,51 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 	return (0);
 }
 
-void	handle_dashes(int argc, char **argv, int i, t_flags *flags)
+int	handle_dashes(int argc, char **argv, int i, t_flags *flags)
 {
 	char	*identifier;
 
 	identifier = NULL;
 	identifier = get_identifier(argv[i]);
 	if (!identifier)
-		error_exit(2, "no arguments provided");
+	{
+		if (!strcmp(argv[i], "--"))
+			return (1);
+		error_exit(2, "option \"%s\" requires an argument", argv[i]);
+	}
 	is_non_arg_flag(identifier);
 	if (i != argc - 1)
 		check_identifier(identifier, argv[i + 1], flags);
 	else
-		error_exit(2, "no argument provided");
+		error_exit(2, "option \"%s\" requires an argument", argv[i]);
+	return (0);
 }
 
 void	parse_args(int argc, char **argv, t_ping *ping)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	if (argc < 2)
-		error_exit(2, "no arguments provided");
+		error_exit(1, "missing host operand");
 	else
 	{
 		while (i++ < argc - 1)
 		{
 			if (argv[i][0] == '-')
 			{
-				handle_dashes(argc, argv, i, &ping->flags);
+				if (handle_dashes(argc, argv, i, &ping->flags))
+					i++;
 				i++;
 			}
 			else
 			{
 				ping->target = argv[i];
+				strcpy(ping->argv_target, argv[i]);
 				printf("target is: %s\n", ping->target);
 			}
 		}
 	}
+	if (!ping->target)
+		error_exit(1, "missing host operand");
 }

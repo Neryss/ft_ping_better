@@ -15,6 +15,5 @@
 
 void	setup_signals(void);
 void	int_handler(int sig);
-void	alarm_handler(int sig);
 
 #endif

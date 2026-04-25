@@ -26,7 +26,8 @@ int	main(int argc, char **argv)
 	bzero(&g_ping, sizeof(g_ping));
 	clock_gettime(CLOCK_MONOTONIC, &g_ping.program_start);
 	if (getuid())
-		error_exit(1, "you need sudo for raw sockets creation\n");
+		error_exit(1,
+			"you need root permission for raw sockets creation\n");
 	setup_signals();
 	g_ping.sleep_time = 1;
 	init_flags(&g_ping.flags);
