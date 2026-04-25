@@ -46,7 +46,8 @@ int	store_uint8_flag(char *value, uint8_t *var)
 		printf("Found value and stored it in flags: %d\n", *var);
 		return (0);
 	}
-	error_exit(1, "invalid value (\'%s\' near \'%s\')", value, near_error(value));
+	error_exit(1, "invalid value (\'%s\' near \'%s\')",
+		value, near_error(value));
 	return (1);
 }
 

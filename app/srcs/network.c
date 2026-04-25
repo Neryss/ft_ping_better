@@ -40,7 +40,6 @@ void	dns_lookup(t_ping *ping)
 		perror("Couldn't retreive from inet_ntop!");
 		exit(1);
 	}
-	// printf("dns target: %s\n", ping->target);
 }
 
 void	reverse_dns_lookup(t_ping *ping)
@@ -56,10 +55,6 @@ void	reverse_dns_lookup(t_ping *ping)
 			ping->dns, sizeof(ping->dns), NULL, 0,
 			NI_NAMEREQD);
 	(void)ret;
-	// if (ret)
-	// 	error_exit(10, "could not resolve reverse dns of %s: %s",
-	// 		ping->target, gai_strerror(ret));
-	// printf("reverse dns: %s", ping->dns);
 }
 
 void	print_rcv_ping(t_ping *ping, int bytes, char *buffer)
