@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 16:37:43 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/18 21:02:19 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/25 18:43:55 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 # define FT_PING_H
 
 # include "flags.h"
+# include "stats.h"
+# include "packets_stats.h"
 # include <netdb.h>
 # include <sys/time.h>
 # include <stdbool.h>
 
-typedef struct s_packets_stats
-{
-	uint32_t	sent;
-	uint32_t	rcv;
-}				t_packet_stats;
 
 typedef struct s_ping
 {
@@ -43,6 +40,7 @@ typedef struct s_ping
 }				t_ping;
 
 extern t_ping	g_ping;
+extern bool		g_running;
 
 void	init_socket(t_ping *ping);
 void	ping_loop(t_ping *ping);

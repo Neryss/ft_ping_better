@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -pedantic -g3
+CFLAGS=-Wall -Wextra -Werror -pedantic -g3 -lm
 INCLUDE_PATH=-I./includes
 
 NAME=ft_ping
@@ -14,6 +14,8 @@ INCLUDES= \
 			includes/packets_utils.h \
 			includes/network.h \
 			includes/signals.h \
+			includes/stats.h \
+			includes/packets_stats.h \
 
 SRCS= \
 			srcs/main.c \
@@ -26,6 +28,7 @@ SRCS= \
 			srcs/network.c \
 			srcs/ft_ping.c \
 			srcs/signals.c \
+			srcs/stats.c \
 
 OBJS= $(SRCS:%.c=%.o)
 

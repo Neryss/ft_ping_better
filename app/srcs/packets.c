@@ -6,13 +6,14 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:31:40 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/20 13:47:28 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/25 19:16:26 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "packets.h"
 #include "ft_ping.h"
 #include "network.h"
+#include "stats.h"
 #include <bits/time.h>
 #include <netinet/ip_icmp.h>
 #include <strings.h>
@@ -86,12 +87,6 @@ void	rcv_packet(t_ping *ping)
 	if (ret >= 0)
 	{
 		clock_gettime(CLOCK_MONOTONIC, &ping->end);
-		// dump_response(&buffer);
-		// ip_hdr = (struct ip *)buffer;
-		// headers_size = (ip_hdr->ip_hl * 4) + 8;
-		// printf("bytes without header: %d\n", ret - headers_size);
-		// printf("received %d bytes from %s\n",
-		// 	ret - (ip_hdr->ip_hl * 4), ping->target);
 		print_rcv_ping(ping, ret, buffer);
 		ping->packets_stats.rcv++;
 	}

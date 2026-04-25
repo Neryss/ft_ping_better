@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 16:13:02 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/18 19:33:17 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/25 18:18:47 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,28 @@
 #include <unistd.h>
 #include <strings.h>
 #include <time.h>
+#include "stats.h"
 
-t_ping	g_ping;
+bool	g_running;
 
 int	main(int argc, char **argv)
 {
-	bzero(&g_ping, sizeof(g_ping));
-	clock_gettime(CLOCK_MONOTONIC, &g_ping.program_start);
+	t_ping	ping;
+
+	bzero(&ping, sizeof(ping));
+	clock_gettime(CLOCK_MONOTONIC, &ping.program_start);
 	if (getuid())
 		error_exit(1,
 			"you need root permission for raw sockets creation\n");
 	setup_signals();
-	g_ping.sleep_time = 1;
-	init_flags(&g_ping.flags);
-	parse_args(argc, argv, &g_ping);
-	print_flags(&g_ping.flags);
-	dns_lookup(&g_ping);
-	reverse_dns_lookup(&g_ping);
-	init_socket(&g_ping);
-	ping_loop(&g_ping);
+	ping.sleep_time = 1;
+	init_flags(&ping.flags);
+	parse_args(argc, argv, &ping);
+	print_flags(&ping.flags);
+	dns_lookup(&ping);
+	reverse_dns_lookup(&ping);
+	init_socket(&ping);
+	ping_loop(&ping);
+	print_stats(&ping);
 	return (0);
 }

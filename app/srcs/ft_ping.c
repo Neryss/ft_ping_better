@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:13:10 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/18 19:30:39 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/25 19:16:24 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ void	ping_loop(t_ping *ping)
 {
 
 	set_raw_sockotp(ping);
-	ping->running = true;
+	g_running = true;
 	printf("PING %s (%s): %d data bytes:\n", ping->target, ping->dns, ping->flags.packet_size);
-	while (ping->running)
+	while (g_running)
 	{
 		send_packet(ping);
 		rcv_packet(ping);
+		calculate_rtt_stats(ping);
 		usleep(ping->flags.interval * 1000000);
 		// alarm(ping->sleep_time);
 		// printf("Time taken: %Lf\n", rtt);
