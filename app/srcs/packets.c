@@ -42,6 +42,10 @@ unsigned short	checksum(void *b, int len)
 	return (result);
 }
 
+/*
+* TODO: we should get ID as BE not LE (?) and display it when using -v
+*		on the first line
+*/
 t_packet	create_packet(int packet_size, int *seq)
 {
 	int			i;
@@ -52,7 +56,6 @@ t_packet	create_packet(int packet_size, int *seq)
 	packet.header.type = ICMP_ECHO;
 	packet.header.code = 0;
 	packet.header.un.echo.id = getpid();
-	// TODO: we should get this value as BE not LE (?) and display it when using -v
 	printf("echo ID: %d\n", packet.header.un.echo.id);
 	packet.header.un.echo.sequence = (*seq)++;
 	while (i++ < packet_size)
@@ -77,13 +80,11 @@ void	send_packet(t_ping *ping)
 	clock_gettime(CLOCK_MONOTONIC, &ping->start);
 }
 
+// TODO: check buffer size
 void	rcv_packet(t_ping *ping)
 {
-	// TODO: check size
 	char				buffer[MAX_PAYLOAD_SIZE];
 	int					ret;
-	// uint8_t				headers_size;
-	// struct ip			*ip_hdr;
 
 	ret = recv(ping->socket, &buffer, sizeof(buffer), 0);
 	if (ret >= 0)

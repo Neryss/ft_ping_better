@@ -20,7 +20,6 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-
 typedef struct s_ping
 {
 	bool			running;
@@ -39,7 +38,6 @@ typedef struct s_ping
 	t_packet_stats	packets_stats;	
 }				t_ping;
 
-extern t_ping	g_ping;
 extern bool		g_running;
 
 void	init_socket(t_ping *ping);

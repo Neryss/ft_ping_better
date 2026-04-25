@@ -66,9 +66,8 @@ void	print_rcv_ping(t_ping *ping, int bytes, char *buffer)
 
 	ip_header = (struct ip *)buffer;
 	icmp_header = (struct icmphdr *)((char *)buffer + (ip_header->ip_hl * 4));
-
 	elapsed = ((double)(ping->end.tv_nsec
-			- ping->start.tv_nsec)) / 1000000.0;
+				- ping->start.tv_nsec)) / 1000000.0;
 	rtt = (ping->end.tv_sec - ping->start.tv_sec) * 1000.0 + elapsed;
 	printf("%d bytes from %s (%s): icmp_seq=%d, ttl=%d time=%.3Lf ms\n",
 		bytes - (ip_header->ip_hl * 4), ping->dns, ping->target,

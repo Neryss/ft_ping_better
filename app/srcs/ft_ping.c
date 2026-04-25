@@ -50,17 +50,15 @@ void	set_raw_sockotp(t_ping *ping)
 
 void	ping_loop(t_ping *ping)
 {
-
 	set_raw_sockotp(ping);
 	g_running = true;
-	printf("PING %s (%s): %d data bytes:\n", ping->target, ping->dns, ping->flags.packet_size);
+	printf("PING %s (%s): %d data bytes:\n",
+		ping->target, ping->dns, ping->flags.packet_size);
 	while (g_running)
 	{
 		send_packet(ping);
 		rcv_packet(ping);
 		calculate_rtt_stats(ping);
 		usleep(ping->flags.interval * 1000000);
-		// alarm(ping->sleep_time);
-		// printf("Time taken: %Lf\n", rtt);
 	}
 }

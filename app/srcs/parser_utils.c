@@ -94,12 +94,12 @@ char	*get_identifier(char *arg)
 	return (NULL);
 }
 
-char	*near_error(char * value)
+char	*near_error(char *value)
 {
 	int	i;
 
 	i = 0;
-	while(value[i])
+	while (value[i])
 	{
 		if (value[i] == '.')
 			return (value + i);
