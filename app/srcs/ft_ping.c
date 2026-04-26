@@ -52,14 +52,17 @@ void	ping_loop(t_ping *ping)
 {
 	set_raw_sockotp(ping);
 	g_running = true;
-	printf("PING %s (%s): %d data bytes:\n",
-		ping->target, ping->dns, ping->flags.packet_size);
+	if (ping->flags.verbose)
+		printf("PING %s (%s): %d data bytes, id 0x%04x:\n",
+			ping->target, ping->dns, ping->flags.packet_size, ping->pid);
+	else
+		printf("PING %s (%s): %d data bytes:\n",
+			ping->target, ping->dns, ping->flags.packet_size);
 	while (g_running)
 	{
 		send_packet(ping);
 		rcv_packet(ping);
-		calculate_rtt_stats(ping);
-		if (ping->seq >= ping->flags.count)
+		if (ping->flags.count != 0 && ping->seq >= ping->flags.count)
 			return;
 		usleep(ping->flags.interval * 1000000);
 	}

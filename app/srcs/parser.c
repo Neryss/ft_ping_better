@@ -25,7 +25,8 @@ int	store_int_flag(char *value, int *var)
 		printf("Found value and stored it in flags: %d\n", *var);
 		return (0);
 	}
-	printf("Error: wrong format\n");
+	error_exit(1, "invalid value (\'%s\' near \'%s\')",
+		value, near_error(value));
 	return (1);
 }
 
@@ -53,27 +54,33 @@ int	store_uint8_flag(char *value, uint8_t *var)
 
 int	check_identifier(char *id, char *value, t_flags *flags)
 {
+	char	*pass;
+
 	if (!id)
 		error_exit(3, "invalid option -- %s", id);
+	if (strlen(id) > 1 && strcmp(id, "ttl"))
+		pass = &id[1];
+	else
+		pass = value;
 	if (*id == 'c')
-		store_int_flag(value, &flags->count);
+		store_int_flag(pass, &flags->count);
 	else if (*id == 'w')
-		store_int_flag(value, &flags->deadline);
+		store_int_flag(pass, &flags->deadline);
 	else if (*id == 's')
-		store_int_flag(value, &flags->packet_size);
+		store_int_flag(pass, &flags->packet_size);
 	else if (*id == 'W')
-		store_int_flag(value, &flags->timeout);
+		store_int_flag(pass, &flags->timeout);
 	else if (*id == 'v')
 		return (flags->verbose = true);
 	else if (*id == 'i')
 	{
-		if (!is_float(value))
-			flags->interval = atof(value);
+		if (!is_float(pass))
+			flags->interval = atof(pass);
 		else
 			error_exit(1, "invalid value %f", flags->interval);
 	}
 	else if (!strcmp(id, "ttl"))
-		store_uint8_flag(value, &flags->ttl);
+		store_uint8_flag(pass, &flags->ttl);
 	else
 		error_exit(1, "invalid option %s", id);
 	return (0);
@@ -91,7 +98,8 @@ int	handle_dashes(int argc, char **argv, int i, t_flags *flags)
 			return (1);
 		error_exit(2, "option \"%s\" requires an argument", argv[i]);
 	}
-	is_non_arg_flag(identifier);
+	printf("identifier: %s\n", identifier);
+	// is_non_arg_flag(identifier);
 	if (i != argc - 1)
 		check_identifier(identifier, argv[i + 1], flags);
 	else
@@ -108,7 +116,7 @@ void	parse_args(int argc, char **argv, t_ping *ping)
 		error_exit(1, "missing host operand");
 	else
 	{
-		while (i++ < argc - 1)
+		while (i++ < argc - 2)
 		{
 			printf("Treating arg: %s for i: %d\n", argv[i], i);
 			if (argv[i][0] == '-')
@@ -116,19 +124,15 @@ void	parse_args(int argc, char **argv, t_ping *ping)
 				if (handle_dashes(argc, argv, i, &ping->flags))
 				{
 					printf("Double inc\n");
-					i++;
 				}
-				i++;
 			}
 			// if (argv[i][0] != '-')
-			else
-			{
+			printf("I is : %d, argc is : %d\n", i, argc);
+		}
+		printf("target will be %s\n", argv[i]);
 				ping->target = argv[i];
 				strcpy(ping->argv_target, argv[i]);
 				printf("target is: %s\n", ping->target);
-			}
-			printf("I is : %d, argc is : %d\n", i, argc);
-		}
 	}
 	if (!ping->target)
 		error_exit(1, "missing host operand");
