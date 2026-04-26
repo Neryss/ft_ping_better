@@ -16,6 +16,19 @@
 #include <time.h>
 #include <math.h>
 
+/*
+* Recent ping impls use MDEV instead, inetutils-2.0
+* uses STDDEV or standard derivation which is calculated
+* from stats we calculate each time a packet comes back in
+* `calculate_rtt_stats()`
+*
+* You can use this website to check if your function works as expected:
+* https://www.calculatorsoup.com/calculators/statistics/standard-deviation-calculator.php
+* Set as "population" and enter each packet rtt
+*
+* You can also find more information about how it works here:
+* https://www.nlm.nih.gov/oet/ed/stats/02-900.html
+*/
 static long double	calculate_stddev(t_ping *ping)
 {
 	long double	mean;
@@ -48,6 +61,7 @@ void	print_stats(t_ping *ping)
 		ping->packets_stats.max / 1000.0, stddev / 1000.0);
 }
 
+// This should be updated each rcv
 void	calculate_rtt_stats(t_ping *ping)
 {
 	long double	rtt;

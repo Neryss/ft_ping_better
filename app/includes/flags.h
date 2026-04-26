@@ -13,6 +13,7 @@
 #ifndef FLAGS_H
 # define FLAGS_H
 
+#include <stdbool.h>
 # include <stdint.h>
 
 typedef struct s_flags
@@ -29,6 +30,8 @@ typedef struct s_flags
 	int		packet_size;
 	// -W
 	int		timeout;
+	// -v (verbose)
+	bool	verbose;
 }			t_flags;
 
 void	init_flags(t_flags *flags);

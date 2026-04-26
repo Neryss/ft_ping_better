@@ -22,7 +22,7 @@ void	init_socket(t_ping *ping)
 	if (ping->socket < 0)
 	{
 		perror("could not create socket!");
-		exit(15);
+		exit(1);
 	}
 }
 
@@ -59,6 +59,8 @@ void	ping_loop(t_ping *ping)
 		send_packet(ping);
 		rcv_packet(ping);
 		calculate_rtt_stats(ping);
+		if (ping->seq >= ping->flags.count)
+			return;
 		usleep(ping->flags.interval * 1000000);
 	}
 }

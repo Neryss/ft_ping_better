@@ -17,6 +17,7 @@
 # include "stats.h"
 # include "packets_stats.h"
 # include <netdb.h>
+#include <stdint.h>
 # include <sys/time.h>
 # include <stdbool.h>
 
@@ -35,6 +36,7 @@ typedef struct s_ping
 	struct timespec	end;
 	int				sleep_time;
 	int				seq;
+	uint16_t		pid;
 	t_packet_stats	packets_stats;	
 }				t_ping;
 

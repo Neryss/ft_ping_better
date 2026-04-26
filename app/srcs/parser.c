@@ -63,6 +63,8 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 		store_int_flag(value, &flags->packet_size);
 	else if (*id == 'W')
 		store_int_flag(value, &flags->timeout);
+	else if (*id == 'v')
+		return (flags->verbose = true);
 	else if (*id == 'i')
 	{
 		if (!is_float(value))
@@ -71,10 +73,7 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 			error_exit(1, "invalid value %f", flags->interval);
 	}
 	else if (!strcmp(id, "ttl"))
-	{
 		store_uint8_flag(value, &flags->ttl);
-		printf("uint: %d\n", flags->ttl);
-	}
 	else
 		error_exit(1, "invalid option %s", id);
 	return (0);
@@ -111,18 +110,24 @@ void	parse_args(int argc, char **argv, t_ping *ping)
 	{
 		while (i++ < argc - 1)
 		{
+			printf("Treating arg: %s for i: %d\n", argv[i], i);
 			if (argv[i][0] == '-')
 			{
 				if (handle_dashes(argc, argv, i, &ping->flags))
+				{
+					printf("Double inc\n");
 					i++;
+				}
 				i++;
 			}
+			// if (argv[i][0] != '-')
 			else
 			{
 				ping->target = argv[i];
 				strcpy(ping->argv_target, argv[i]);
 				printf("target is: %s\n", ping->target);
 			}
+			printf("I is : %d, argc is : %d\n", i, argc);
 		}
 	}
 	if (!ping->target)

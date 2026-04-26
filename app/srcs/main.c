@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 	t_ping	ping;
 
 	bzero(&ping, sizeof(ping));
+	ping.pid = getpid();
 	clock_gettime(CLOCK_MONOTONIC, &ping.program_start);
 	if (getuid())
 		error_exit(1,
