@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 17:02:16 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/18 21:05:47 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/27 16:52:13 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include <string.h>
 #include "errors.h"
 #include "parser_utils.h"
+#include "parse_floats.h"
 
 int	store_int_flag(char *value, int *var)
 {
 	if (!is_numeric(value))
 	{
 		*var = atoi(value);
-		printf("Found value and stored it in flags: %d\n", *var);
 		return (0);
 	}
 	error_exit(1, "invalid value (\'%s\' near \'%s\')",
@@ -39,12 +39,8 @@ int	store_uint8_flag(char *value, uint8_t *var)
 	{
 		tmp = atoi(value);
 		if (tmp > 255 || tmp < 0)
-		{
 			error_exit(1, "option value too big: %d\n", tmp);
-			return (1);
-		}
 		*var = tmp;
-		printf("Found value and stored it in flags: %d\n", *var);
 		return (0);
 	}
 	error_exit(1, "invalid value (\'%s\' near \'%s\')",
@@ -56,8 +52,6 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 {
 	char	*pass;
 
-	if (!id)
-		error_exit(3, "invalid option -- %s", id);
 	if (strlen(id) > 1 && strcmp(id, "ttl"))
 		pass = &id[1];
 	else
@@ -73,12 +67,7 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 	else if (*id == 'v')
 		return (flags->verbose = true);
 	else if (*id == 'i')
-	{
-		if (!is_float(pass))
-			flags->interval = atof(pass);
-		else
-			error_exit(1, "invalid value %f", flags->interval);
-	}
+		parse_i_float(pass, flags);
 	else if (!strcmp(id, "ttl"))
 		store_uint8_flag(pass, &flags->ttl);
 	else
@@ -98,8 +87,6 @@ int	handle_dashes(int argc, char **argv, int i, t_flags *flags)
 			return (1);
 		error_exit(2, "option \"%s\" requires an argument", argv[i]);
 	}
-	printf("identifier: %s\n", identifier);
-	// is_non_arg_flag(identifier);
 	if (i != argc - 1)
 		check_identifier(identifier, argv[i + 1], flags);
 	else
@@ -118,21 +105,11 @@ void	parse_args(int argc, char **argv, t_ping *ping)
 	{
 		while (i++ < argc - 2)
 		{
-			printf("Treating arg: %s for i: %d\n", argv[i], i);
 			if (argv[i][0] == '-')
-			{
-				if (handle_dashes(argc, argv, i, &ping->flags))
-				{
-					printf("Double inc\n");
-				}
-			}
-			// if (argv[i][0] != '-')
-			printf("I is : %d, argc is : %d\n", i, argc);
+				handle_dashes(argc, argv, i, &ping->flags);
 		}
-		printf("target will be %s\n", argv[i]);
-				ping->target = argv[i];
-				strcpy(ping->argv_target, argv[i]);
-				printf("target is: %s\n", ping->target);
+		ping->target = argv[i];
+		strcpy(ping->argv_target, argv[i]);
 	}
 	if (!ping->target)
 		error_exit(1, "missing host operand");

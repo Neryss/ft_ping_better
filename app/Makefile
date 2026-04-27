@@ -8,6 +8,7 @@ INCLUDES= \
 			includes/ft_ping.h \
 			includes/parser.h \
 			includes/parser_utils.h \
+			includes/parse_floats.h \
 			includes/flags.h \
 			includes/errors.h \
 			includes/packets.h \
@@ -21,6 +22,7 @@ SRCS= \
 			srcs/main.c \
 			srcs/parser.c \
 			srcs/parser_utils.c \
+			srcs/parse_floats.c \
 			srcs/flags.c \
 			srcs/errors.c \
 			srcs/packets.c \

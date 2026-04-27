@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flags.h                                            :+:      :+:    :+:   */
+/*   parse_floats.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/11 18:19:50 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/27 16:53:51 by ckurt            ###   ########.fr       */
+/*   Created: 2026/04/27 16:48:41 by ckurt             #+#    #+#             */
+/*   Updated: 2026/04/27 16:51:34 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FLAGS_H
-# define FLAGS_H
+#ifndef PARSE_FLOATS_H
+# define PARSE_FLOATS_H
 
-# include <stdbool.h>
-# include <stdint.h>
+# include "flags.h"
 
-typedef struct s_flags
-{
-	// --ttl
-	uint8_t	ttl;
-	// -c
-	int		count;
-	// -i
-	float	interval;
-	// -w
-	int		deadline;
-	// -s
-	int		packet_size;
-	// -W
-	int		timeout;
-	// -v (verbose)
-	bool	verbose;
-}			t_flags;
-
-void	init_flags(t_flags *flags);
-void	print_flags(t_flags *flags);
+void	parse_i_float(char *pass, t_flags *flags);
 
 #endif

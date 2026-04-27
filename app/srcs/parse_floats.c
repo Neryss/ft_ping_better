@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flags.h                                            :+:      :+:    :+:   */
+/*   parse_floats.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/11 18:19:50 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/27 16:53:51 by ckurt            ###   ########.fr       */
+/*   Created: 2026/04/27 16:47:44 by ckurt             #+#    #+#             */
+/*   Updated: 2026/04/27 16:51:14 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FLAGS_H
-# define FLAGS_H
+#include "parse_floats.h"
+#include "errors.h"
+#include "parser_utils.h"
 
-# include <stdbool.h>
-# include <stdint.h>
-
-typedef struct s_flags
+void	parse_i_float(char *pass, t_flags *flags)
 {
-	// --ttl
-	uint8_t	ttl;
-	// -c
-	int		count;
-	// -i
-	float	interval;
-	// -w
-	int		deadline;
-	// -s
-	int		packet_size;
-	// -W
-	int		timeout;
-	// -v (verbose)
-	bool	verbose;
-}			t_flags;
-
-void	init_flags(t_flags *flags);
-void	print_flags(t_flags *flags);
-
-#endif
+	if (!is_float(pass))
+		flags->interval = atof(pass);
+	else
+		error_exit(1, "invalid value %f", flags->interval);
+}

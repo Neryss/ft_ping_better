@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 16:37:43 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/25 18:43:55 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/27 16:54:01 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 # include "stats.h"
 # include "packets_stats.h"
 # include <netdb.h>
-#include <stdint.h>
+# include <stdint.h>
 # include <sys/time.h>
 # include <stdbool.h>
 
 typedef struct s_ping
 {
-	bool			running;
 	int				socket;
 	t_flags			flags;
 	char			argv_target[NI_MAXHOST];

@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 18:27:36 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/25 19:20:06 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/27 16:53:17 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 * `calculate_rtt_stats()`
 *
 * You can use this website to check if your function works as expected:
-* https://www.calculatorsoup.com/calculators/statistics/standard-deviation-calculator.php
+* https://www.calculatorsoup.com/
+* calculators/statistics/standard-deviation-calculator.php
 * Set as "population" and enter each packet rtt
 *
 * You can also find more information about how it works here:

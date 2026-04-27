@@ -6,15 +6,17 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:13:10 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/25 19:16:24 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/04/27 16:53:35 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 #include "packets.h"
+#include "signals.h"
 #include <errors.h>
 #include <asm-generic/socket.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 
 void	init_socket(t_ping *ping)
 {
@@ -50,6 +52,8 @@ void	set_raw_sockotp(t_ping *ping)
 
 void	ping_loop(t_ping *ping)
 {
+	if (ping->flags.deadline)
+		set_deadline_timer(ping->flags.deadline);
 	set_raw_sockotp(ping);
 	g_running = true;
 	if (ping->flags.verbose)
@@ -63,7 +67,7 @@ void	ping_loop(t_ping *ping)
 		send_packet(ping);
 		rcv_packet(ping);
 		if (ping->flags.count != 0 && ping->seq >= ping->flags.count)
-			return;
+			return ;
 		usleep(ping->flags.interval * 1000000);
 	}
 }

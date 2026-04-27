@@ -12,7 +12,6 @@
 
 #include "parser_utils.h"
 #include <ctype.h>
-#include <stdio.h>
 #include <string.h>
 #include "errors.h"
 
@@ -39,16 +38,10 @@ bool	is_float(char *s)
 			if (dot_count < 1)
 				dot_count++;
 			else
-			{
-				printf("more than one dot\n");
 				return (1);
-			}
 		}
 		else if (!isdigit(*s))
-		{
-			printf("Not a digit: %c\n", *s);
 			return (1);
-		}
 		s++;
 	}
 	return (0);
@@ -84,10 +77,7 @@ char	*get_identifier(char *arg)
 		else
 		{
 			if (count > 2)
-			{
-				printf("Error, more than 2 dashes\n");
 				return (NULL);
-			}
 			return (&arg[i]);
 		}
 	}

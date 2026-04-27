@@ -15,5 +15,6 @@
 
 void	setup_signals(void);
 void	int_handler(int sig);
+void	set_deadline_timer(int deadline);
 
 #endif
