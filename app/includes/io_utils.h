@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   io_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/11 17:10:19 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/13 16:11:32 by ckurt            ###   ########.fr       */
+/*   Created: 2026/05/02 18:45:17 by ckurt             #+#    #+#             */
+/*   Updated: 2026/05/02 18:49:34 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef IO_UTILS_H
+# define IO_UTILS_H
 
-# include "ft_ping.h"
 # include <stdbool.h>
-# include <stdint.h>
+# include "ft_ping.h"
 
-void	parse_args(int argc, char **argv, t_ping *ping);
-char	*get_identifier(char *arg);
-int		check_identifier(int *i_argc, char *id, char *value, t_flags *flags);
-int		handle_dashes(int argc, char **argv, int i, t_flags *flags);
+void	print_preamble(t_ping *ping);
 
 #endif

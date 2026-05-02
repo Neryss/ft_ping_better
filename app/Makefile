@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -pedantic -g3 -lm
+CFLAGS=-Wall -Wextra -Werror -pedantic -g3
 INCLUDE_PATH=-I./includes
 
 NAME=ft_ping
@@ -10,6 +10,7 @@ INCLUDES= \
 			includes/parser_utils.h \
 			includes/parse_floats.h \
 			includes/flags.h \
+			includes/store_flags.h \
 			includes/errors.h \
 			includes/packets.h \
 			includes/packets_utils.h \
@@ -17,6 +18,7 @@ INCLUDES= \
 			includes/signals.h \
 			includes/stats.h \
 			includes/packets_stats.h \
+			includes/io_utils.h \
 
 SRCS= \
 			srcs/main.c \
@@ -24,6 +26,7 @@ SRCS= \
 			srcs/parser_utils.c \
 			srcs/parse_floats.c \
 			srcs/flags.c \
+			srcs/store_flags.c \
 			srcs/errors.c \
 			srcs/packets.c \
 			srcs/packets_utils.c \
@@ -31,6 +34,7 @@ SRCS= \
 			srcs/ft_ping.c \
 			srcs/signals.c \
 			srcs/stats.c \
+			srcs/io_utils.c \
 
 OBJS= $(SRCS:%.c=%.o)
 
@@ -38,7 +42,7 @@ OBJS= $(SRCS:%.c=%.o)
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDE_PATH) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -lm $(INCLUDE_PATH) -o $(NAME)
 
 all: $(NAME)
 

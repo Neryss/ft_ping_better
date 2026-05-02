@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 18:27:36 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/27 16:53:17 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/05/02 16:56:10 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,15 @@ void	print_stats(t_ping *ping)
 	printf("--- %s statistics ---\n", ping->argv_target);
 	loss = (double)(ping->packets_stats.sent - ping->packets_stats.rcv)
 		/ (double)ping->packets_stats.sent * 100.0;
+	if (!ping->packets_stats.sent)
+		loss = 100;
 	printf("%d packets transmitted, %d packets received, %.0f%% packet loss\n",
 		ping->packets_stats.sent, ping->packets_stats.rcv,
 		(loss));
-	printf("round-trip min/avg/max/stddev = %.3Lf/%.3Lf/%.3Lf/%.3Lf ms\n",
-		ping->packets_stats.min / 1000.0, avg / 1000.0,
-		ping->packets_stats.max / 1000.0, stddev / 1000.0);
+	if (ping->packets_stats.rcv)
+		printf("round-trip min/avg/max/stddev = %.3Lf/%.3Lf/%.3Lf/%.3Lf ms\n",
+			ping->packets_stats.min / 1000.0, avg / 1000.0,
+			ping->packets_stats.max / 1000.0, stddev / 1000.0);
 }
 
 // This should be updated each rcv

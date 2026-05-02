@@ -6,17 +6,18 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:13:10 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/27 16:53:35 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/05/02 18:49:58 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 #include "packets.h"
 #include "signals.h"
+#include "io_utils.h"
 #include <errors.h>
 #include <asm-generic/socket.h>
 #include <sys/socket.h>
-#include <sys/time.h>
+#include <time.h>
 
 void	init_socket(t_ping *ping)
 {
@@ -47,27 +48,38 @@ void	set_raw_sockotp(t_ping *ping)
 		perror("could not set sockopts timeout!");
 		exit(1);
 	}
-	printf("Set options without fail\n");
+}
+
+static double	get_time_seconds(void)
+{
+	struct timespec	ts;
+
+	clock_gettime(CLOCK_MONOTONIC, &ts);
+	return (ts.tv_sec + ts.tv_nsec / 1e9);
 }
 
 void	ping_loop(t_ping *ping)
 {
+	double	last_time;
+	double	current_time;
+
+	last_time = 0.0;
+	current_time = 0.0;
 	if (ping->flags.deadline)
 		set_deadline_timer(ping->flags.deadline);
 	set_raw_sockotp(ping);
-	g_running = true;
-	if (ping->flags.verbose)
-		printf("PING %s (%s): %d data bytes, id 0x%04x:\n",
-			ping->target, ping->dns, ping->flags.packet_size, ping->pid);
-	else
-		printf("PING %s (%s): %d data bytes:\n",
-			ping->target, ping->dns, ping->flags.packet_size);
+	print_preamble(ping);
 	while (g_running)
 	{
-		send_packet(ping);
-		rcv_packet(ping);
-		if (ping->flags.count != 0 && ping->seq >= ping->flags.count)
-			return ;
-		usleep(ping->flags.interval * 1000000);
+		current_time = get_time_seconds();
+		if (current_time - last_time >= ping->flags.interval
+			|| last_time == 0.0)
+		{
+			last_time = current_time;
+			send_packet(ping);
+			rcv_packet(ping);
+			if (ping->flags.count != 0 && ping->seq >= ping->flags.count)
+				return ;
+		}
 	}
 }

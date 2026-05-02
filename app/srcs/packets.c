@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:31:40 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/25 19:16:26 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/05/02 18:56:13 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ int	check_rcv_error(char *buffer, t_ping *ping)
 	icmp_header = (struct icmphdr *)((char *)buffer + (ip_header->ip_hl * 4));
 	if (icmp_header->type == 0)
 		return (0);
-	if (icmp_header->type == 3)
+	if (icmp_header->type == 11)
 	{
 		if (ping->flags.verbose)
 			printf("time to live exceeded\n");
 	}
-	else if (icmp_header->type == 11)
+	else if (icmp_header->type == 3)
 		if (ping->flags.verbose)
 			printf("Destination unreachable\n");
 	return (1);

@@ -54,6 +54,8 @@ void	reverse_dns_lookup(t_ping *ping)
 	ret = getnameinfo((struct sockaddr *)&tmp_addr, len,
 			ping->dns, sizeof(ping->dns), NULL, 0,
 			NI_NAMEREQD);
+	if (!strlen(ping->dns))
+		strncpy(ping->dns, ping->target, strlen(ping->target));
 	(void)ret;
 }
 

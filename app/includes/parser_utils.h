@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 21:10:12 by ckurt             #+#    #+#             */
-/*   Updated: 2026/04/18 21:04:45 by ckurt            ###   ########.fr       */
+/*   Updated: 2026/05/02 16:46:31 by ckurt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ bool	is_numeric(char *s);
 bool	is_float(char *s);
 void	is_non_arg_flag(char *id);
 char	*get_identifier(char *arg);
-char	*near_error(char * value);
+char	*near_error(char *value);
 
 #endif
