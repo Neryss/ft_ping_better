@@ -19,7 +19,7 @@
 
 void	parse_args(int argc, char **argv, t_ping *ping);
 char	*get_identifier(char *arg);
-int		check_identifier(char *id, char *value, t_flags *flags);
+int		check_identifier(int i, int argc, char *id, char *value, t_flags *flags);
 int		handle_dashes(int argc, char **argv, int i, t_flags *flags);
 
 #endif

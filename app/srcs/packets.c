@@ -80,7 +80,26 @@ void	send_packet(t_ping *ping)
 	clock_gettime(CLOCK_MONOTONIC, &ping->start);
 }
 
-// TODO: check buffer size
+int	check_rcv_error(char *buffer, t_ping *ping)
+{
+	struct ip		*ip_header;
+	struct icmphdr	*icmp_header;
+
+	ip_header = (struct ip *)buffer;
+	icmp_header = (struct icmphdr *)((char *)buffer + (ip_header->ip_hl * 4));
+	if (icmp_header->type == 0)
+		return (0);
+	if (icmp_header->type == 3)
+	{
+		if (ping->flags.verbose)
+			printf("time to live exceeded\n");
+	}
+	else if (icmp_header->type == 11)
+		if (ping->flags.verbose)
+			printf("Destination unreachable\n");
+	return (1);
+}
+
 void	rcv_packet(t_ping *ping)
 {
 	char				buffer[MAX_PAYLOAD_SIZE];
@@ -89,14 +108,17 @@ void	rcv_packet(t_ping *ping)
 	ret = recv(ping->socket, &buffer, sizeof(buffer), 0);
 	if (ret >= 0)
 	{
-		clock_gettime(CLOCK_MONOTONIC, &ping->end);
-		print_rcv_ping(ping, ret, buffer);
-		ping->packets_stats.rcv++;
-		calculate_rtt_stats(ping);
+		if (!check_rcv_error(buffer, ping))
+		{
+			clock_gettime(CLOCK_MONOTONIC, &ping->end);
+			print_rcv_ping(ping, ret, buffer);
+			ping->packets_stats.rcv++;
+			calculate_rtt_stats(ping);
+		}
 	}
 	else
 	{
-		printf("received packet failed\n");
-		perror("fk");
+		if (ping->flags.verbose)
+			perror("receive packet failed\n");
 	}
 }

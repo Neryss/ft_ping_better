@@ -17,7 +17,6 @@
 #include "signals.h"
 #include <unistd.h>
 #include <strings.h>
-#include <time.h>
 #include "stats.h"
 
 bool	g_running;
@@ -28,10 +27,14 @@ int	main(int argc, char **argv)
 
 	bzero(&ping, sizeof(ping));
 	ping.pid = getpid();
-	clock_gettime(CLOCK_MONOTONIC, &ping.program_start);
 	if (getuid())
-		error_exit(1,
-			"you need root permission for raw sockets creation\n");
+	{
+		printf("You need root permissions to create \
+raw sockets, try with sudo\n");
+		exit(1);
+	}
+		// error_exit(1,
+		// 	"you need root permission for raw sockets creation\n");
 	setup_signals();
 	ping.sleep_time = 1;
 	init_flags(&ping.flags);

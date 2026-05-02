@@ -48,14 +48,41 @@ int	store_uint8_flag(char *value, uint8_t *var)
 	return (1);
 }
 
-int	check_identifier(char *id, char *value, t_flags *flags)
+static int	handle_solo_id(char *id, t_flags *flags)
+{
+	printf("normalement je suis là\n");
+	if (*id == '?')
+	{
+		printf("%s", PING_HELP);
+		exit(0);
+	}
+	else if (*id == 'v')
+	{
+		printf("vevose detected\n");
+		return (flags->verbose = true);
+	}
+	return (0);
+}
+
+int	check_identifier(int i, int argc, char *id, char *value, t_flags *flags)
 {
 	char	*pass;
+	int		ret;
 
 	if (strlen(id) > 1 && strcmp(id, "ttl"))
+	{
 		pass = &id[1];
+		ret = 0;
+	}
 	else
+	{
 		pass = value;
+		ret = 1;
+	}
+	if (handle_solo_id(id, flags))
+		return(0);
+	if (i == argc - 1 && ret)
+		error_exit(1, "pas assez d'args mgl\n");
 	if (*id == 'c')
 		store_int_flag(pass, &flags->count);
 	else if (*id == 'w')
@@ -64,15 +91,13 @@ int	check_identifier(char *id, char *value, t_flags *flags)
 		store_int_flag(pass, &flags->packet_size);
 	else if (*id == 'W')
 		store_int_flag(pass, &flags->timeout);
-	else if (*id == 'v')
-		return (flags->verbose = true);
 	else if (*id == 'i')
 		parse_i_float(pass, flags);
 	else if (!strcmp(id, "ttl"))
 		store_uint8_flag(pass, &flags->ttl);
 	else
 		error_exit(1, "invalid option %s", id);
-	return (0);
+	return (ret);
 }
 
 int	handle_dashes(int argc, char **argv, int i, t_flags *flags)
@@ -87,11 +112,7 @@ int	handle_dashes(int argc, char **argv, int i, t_flags *flags)
 			return (1);
 		error_exit(2, "option \"%s\" requires an argument", argv[i]);
 	}
-	if (i != argc - 1)
-		check_identifier(identifier, argv[i + 1], flags);
-	else
-		error_exit(2, "option \"%s\" requires an argument", argv[i]);
-	return (0);
+	return (check_identifier(i, argc, identifier, argv[i + 1], flags));
 }
 
 void	parse_args(int argc, char **argv, t_ping *ping)
@@ -103,13 +124,19 @@ void	parse_args(int argc, char **argv, t_ping *ping)
 		error_exit(1, "missing host operand");
 	else
 	{
-		while (i++ < argc - 2)
+		while (i++ < argc - 1)
 		{
 			if (argv[i][0] == '-')
-				handle_dashes(argc, argv, i, &ping->flags);
+			{
+				if (handle_dashes(argc, argv, i, &ping->flags))
+					i++;
+			}
+			else
+			{
+				ping->target = argv[i];
+				strcpy(ping->argv_target, argv[i]);
+			}
 		}
-		ping->target = argv[i];
-		strcpy(ping->argv_target, argv[i]);
 	}
 	if (!ping->target)
 		error_exit(1, "missing host operand");

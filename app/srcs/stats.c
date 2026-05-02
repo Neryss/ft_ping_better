@@ -50,7 +50,6 @@ void	print_stats(t_ping *ping)
 
 	avg = ping->packets_stats.avg / ping->packets_stats.sent;
 	stddev = calculate_stddev(ping);
-	clock_gettime(CLOCK_MONOTONIC, &ping->program_end);
 	printf("--- %s statistics ---\n", ping->argv_target);
 	loss = (double)(ping->packets_stats.sent - ping->packets_stats.rcv)
 		/ (double)ping->packets_stats.sent * 100.0;

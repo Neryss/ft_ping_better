@@ -26,12 +26,12 @@ Send ICMP ECHO_REQUEST packets to network hosts.\n\
 		-s NUMBER		send NUMBER data octets\n\
 		\n\
 		-?				gives this help list\n\
-		-v				prints program version\n"
+		-v				enables verbose mode\n"
 
 bool	is_numeric(char *s);
 bool	is_float(char *s);
 void	is_non_arg_flag(char *id);
 char	*get_identifier(char *arg);
-char	*near_error(char *value);
+char	*near_error(char * value);
 
 #endif
