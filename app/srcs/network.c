@@ -31,7 +31,7 @@ void	dns_lookup(t_ping *ping)
 	hints.ai_socktype = SOCK_RAW;
 	hints.ai_protocol = IPPROTO_ICMP;
 	if (getaddrinfo(ping->target, NULL, &hints, &result) != 0)
-		error_exit(9, "unknown host");
+		error_exit(1, "unknown host");
 	ping->dest = (struct addrinfo *)result;
 	if (!inet_ntop(AF_INET,
 			&(((struct sockaddr_in *)ping->dest->ai_addr)->sin_addr),
@@ -71,7 +71,7 @@ void	print_rcv_ping(t_ping *ping, int bytes, char *buffer)
 	elapsed = ((double)(ping->end.tv_nsec
 				- ping->start.tv_nsec)) / 1000000.0;
 	rtt = (ping->end.tv_sec - ping->start.tv_sec) * 1000.0 + elapsed;
-	printf("%d bytes from %s (%s): icmp_seq=%d, ttl=%d time=%.3Lf ms\n",
+	printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.3Lf ms\n",
 		bytes - (ip_header->ip_hl * 4), ping->dns, ping->target,
 		icmp_header->un.echo.sequence, ip_header->ip_ttl, rtt);
 }

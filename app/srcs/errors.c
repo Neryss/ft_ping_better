@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "errors.h"
+#include <stdbool.h>
 
 void	error_exit(int code, const char *msg, ...)
 {
@@ -22,10 +23,10 @@ void	error_exit(int code, const char *msg, ...)
 	len = vsnprintf(NULL, 0, msg, args);
 	va_end(args);
 	if (len < 0)
-		exit (67);
+		exit (1);
 	fmt_msg = malloc(sizeof(char) * (len + 1));
 	if (!fmt_msg)
-		exit (68);
+		exit (1);
 	va_start(args, msg);
 	vsnprintf(fmt_msg, len + 1, msg, args);
 	va_end(args);

@@ -16,9 +16,10 @@
 void	print_preamble(t_ping *ping)
 {
 	if (ping->flags.verbose)
-		printf("PING %s (%s): %d data bytes, id 0x%04x:\n",
-			ping->target, ping->dns, ping->flags.packet_size, ping->pid);
+		printf("PING %s (%s): %d data bytes, id 0x%04x = %d\n",
+			ping->argv_target, ping->target,
+			ping->flags.packet_size, ping->pid, ping->pid);
 	else
-		printf("PING %s (%s): %d data bytes:\n",
-			ping->target, ping->dns, ping->flags.packet_size);
+		printf("PING %s (%s): %d data bytes\n",
+			ping->argv_target, ping->target, ping->flags.packet_size);
 }

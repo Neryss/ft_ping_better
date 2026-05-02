@@ -67,7 +67,7 @@ int	check_identifier(int *i_argc, char *id, char *value, t_flags *flags)
 	if (handle_solo_id(id, flags))
 		return (0);
 	if (i_argc[0] == i_argc[1] - 1 && ret)
-		error_exit(1, "pas assez d'args mgl\n");
+		error_exit(1, "missing argument\n");
 	store_flags(id, pass, flags);
 	return (ret);
 }
@@ -83,7 +83,7 @@ int	handle_dashes(int argc, char **argv, int i, t_flags *flags)
 	{
 		if (!strcmp(argv[i], "--"))
 			return (1);
-		error_exit(2, "option \"%s\" requires an argument", argv[i]);
+		error_exit(1, "option \"%s\" requires an argument", argv[i]);
 	}
 	i_argc[0] = i;
 	i_argc[1] = argc;
