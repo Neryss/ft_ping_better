@@ -19,5 +19,5 @@ void	parse_i_float(char *pass, t_flags *flags)
 	if (!is_float(pass))
 		flags->interval = atof(pass);
 	else
-		error_exit(1, false, "invalid value %f", flags->interval);
+		error_exit(1, "invalid value %s", pass);
 }

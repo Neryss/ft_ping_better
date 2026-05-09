@@ -60,18 +60,19 @@ void	print_stats(t_ping *ping)
 		(loss));
 	if (ping->packets_stats.rcv)
 		printf("round-trip min/avg/max/stddev = %.3Lf/%.3Lf/%.3Lf/%.3Lf ms\n",
-			ping->packets_stats.min / 1000.0, avg / 1000.0,
-			ping->packets_stats.max / 1000.0, stddev / 1000.0);
+			ping->packets_stats.min, avg,
+			ping->packets_stats.max, stddev);
 }
 
 // This should be updated each rcv
 void	calculate_rtt_stats(t_ping *ping)
 {
 	long double	rtt;
+	long double	elapsed;
 
-	rtt = (double)((ping->end.tv_nsec - ping->start.tv_nsec) / 1000000.0);
-	rtt += ping->end.tv_sec - ping->start.tv_sec;
-	rtt *= 1000.0;
+	elapsed = ((double)(ping->end.tv_nsec
+				- ping->start.tv_nsec)) / 1000000.0;
+	rtt = (ping->end.tv_sec - ping->start.tv_sec) * 1000.0 + elapsed;
 	if (rtt > ping->packets_stats.max)
 		ping->packets_stats.max = rtt;
 	if (rtt < ping->packets_stats.min || ping->packets_stats.min == 0.0)

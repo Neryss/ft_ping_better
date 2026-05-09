@@ -95,8 +95,12 @@ int	check_rcv_error(char *buffer, t_ping *ping)
 			printf("time to live exceeded\n");
 	}
 	else if (icmp_header->type == 3)
+	{
 		if (ping->flags.verbose)
 			printf("Destination unreachable\n");
+	}
+	else if (icmp_header->type == 8)
+		return (2);
 	return (1);
 }
 
@@ -104,21 +108,20 @@ void	rcv_packet(t_ping *ping)
 {
 	char				buffer[MAX_PAYLOAD_SIZE];
 	int					ret;
+	int					err;
 
 	ret = recv(ping->socket, &buffer, sizeof(buffer), 0);
 	if (ret >= 0)
 	{
-		if (!check_rcv_error(buffer, ping))
+		err = check_rcv_error(buffer, ping);
+		if (err == 2)
+			rcv_packet(ping);
+		else if (!err)
 		{
 			clock_gettime(CLOCK_MONOTONIC, &ping->end);
 			print_rcv_ping(ping, ret, buffer);
 			ping->packets_stats.rcv++;
 			calculate_rtt_stats(ping);
 		}
-	}
-	else
-	{
-		if (ping->flags.verbose)
-			perror("receive packet failed\n");
 	}
 }
