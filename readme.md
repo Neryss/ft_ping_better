@@ -33,3 +33,9 @@ The programs aims to replicate the `ping` utility command, here's how it works:
 
 - Ping wiki page with packets informations: https://en.wikipedia.org/wiki/Ping_(networking_utility)
 - Most network utility functions set ERRNO to a value when an error happens, using `perror()` we can nicely print the corresponding error message.
+
+###
+
+## Why is there 2 repos ?
+
+I redid it because it wasn't norm compliant for the school, thinking it needed to be for the diploma. However it wasn't lol. Anyway this is a cleaner version in every sense so I might delete the old one and keep this one instead !
